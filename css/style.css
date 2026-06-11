@@ -101,3 +101,7 @@ a{
     font-weight: 900;
     text-align: center;
 }
+
+#gameCanvas{  
+    background-color: #1a1a2e;
+}

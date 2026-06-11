@@ -1,8 +1,11 @@
-var GHInterface = function(){}
+var GHInterface = function(){
+	this.ui = null
+	this.game = new GHGame()
+}
 
 GHInterface.prototype.init = function(){
 	this.initUI()
-	this.setupEvent()
+	this.setupEvent()	
 }
 
 GHInterface.prototype.initUI = function(){
@@ -22,6 +25,8 @@ GHInterface.prototype.initUI = function(){
 		display: GHDom( '.page[data-id=menu] #display' ),
 		status: GHDom( '.page[data-id=menu] #status' ),
 		clear: GHDom( '.page[data-id=menu] #clear' ),
+		
+		statusInfo: GHDom( '.status-info' ),
 		
 		//кнопка назад в главное меню
 		back: GHDom( '.buttBackMenu' ),
@@ -70,17 +75,29 @@ GHInterface.prototype.setupEvent = function(){
 	ui.display.on( 'click', function( e ){
 		self.hidePage( e )
 		ui.pageDisplay.addClass( 'active' )
+		
+		//иначе ширину и высоту не определяет потому что обьект скрыт
+		self.game.init( {
+			display: ui.pageDisplay,
+			player: {
+				name: 'Стрелок'
+			}
+		} )
+		
+		
 	} )
 	
 	//клик на пункт меню [статистика]
 	ui.status.on( 'click', function( e ){
 		self.hidePage( e )
-		ui.pageStatus.addClass( 'active' )
+		ui.pageStatus.addClass( 'active' )		
+		ui.statusInfo.html( JSON.stringify( self.game.status, null, 2 ) )
 	} )
 	
 	//клик на пункт меню [сброс статистики]
 	ui.clear.on( 'click', function( e ){
 		e.preventDefault()
+		self.game.clear()
 	} )
 	
 }

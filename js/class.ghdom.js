@@ -138,6 +138,18 @@ GHDom.prototype.css = function( property, value ) {
     }
 }
 
+// Получить ширину элемента (включая padding и border)
+GHDom.prototype.width = function() {
+    if( !this.hasElements() ) return 0
+    return this.element.offsetWidth
+}
+
+// Получить высоту элемента
+GHDom.prototype.height = function() {
+    if( !this.hasElements() ) return 0
+    return this.element.offsetHeight
+}
+
 // Методы классов теперь работают со всеми элементами
 GHDom.prototype.addClass = function( className ){
 	if( !this.hasElements() )
