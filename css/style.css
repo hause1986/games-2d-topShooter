@@ -53,9 +53,25 @@ a{
 	cursor: pointer;
 }
 #content{
-	margin:0 auto;
-	width:90%;
+	margin-top: 10px;
+	margin-bottom: 0;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;	
+    height: calc(100vh - 65px);
+	border: 1px solid #;
 }
+
+.page{
+	width: 100%;
+	height: 100%;
+	display: none;
+	
+}
+.page.active{
+	display: block;
+}
+
 .field{
 	display: block;
 	margin: 10px 0;
@@ -77,4 +93,11 @@ a{
 }
 .butt:hover {
     background-color: #3a5a80;
+}
+
+[data-id='menu'] .field{
+    cursor: pointer;
+    font-size: 45px;
+    font-weight: 900;
+    text-align: center;
 }
