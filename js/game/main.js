@@ -19,6 +19,7 @@ GHGame.prototype.init = function( config ){
 	
 	//для добавления ольектов в сцену
 	var object = new GHObject()
+	object.init()
 	
 	var objPlayer = object.player({
 		name : player.name,
@@ -33,7 +34,7 @@ GHGame.prototype.init = function( config ){
 	var scene = new GHScene( canvas )
 	
 	//добавляем персонажа
-	scene.addObj( objPlayer )
+	scene.add( objPlayer )
 	
 	//отрисовка
 	var renderer = new GHRenderer( scene )

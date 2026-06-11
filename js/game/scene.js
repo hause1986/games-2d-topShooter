@@ -3,6 +3,6 @@ GHScene = function( canvas ){
 	this.objects = []
 }
 
-GHScene.prototype.addObj = function( obj ){
+GHScene.prototype.add = function( obj ){
 	this.objects.push( JSON.parse( JSON.stringify( obj ) ) )
 }

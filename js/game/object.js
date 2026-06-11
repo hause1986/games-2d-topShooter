@@ -8,7 +8,7 @@ var GHObject = function(){
 }
 
 GHObject.prototype.init = function(){
-	initTexture()
+	this.initTexture()
 }
 
 GHObject.prototype.initTexture = function(){
