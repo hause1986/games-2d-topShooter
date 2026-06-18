@@ -86,18 +86,11 @@ GHGame.prototype.start = function(){
 	} )
 }
 
-
-
-
-
 GHGame.prototype.setPlayer = function( name ){
 	if( name != '' ){
 		this.player.name = name
 		this.status.name = name
 	}
-	console.log( this.player )
-	console.log( this.status )
-	
 }
 
 //статистика
