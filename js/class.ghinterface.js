@@ -1,11 +1,12 @@
 var GHInterface = function(){
-	this.ui = null
-	this.game = new GHGame()
+	this.ui = null	
+	this.game = new GHGame()	
 }
 
 GHInterface.prototype.init = function(){
 	this.initUI()
-	this.setupEvent()	
+	this.setupEvent()
+	this.game.init( this.ui.pageDisplay )
 }
 
 GHInterface.prototype.initUI = function(){
@@ -30,6 +31,11 @@ GHInterface.prototype.initUI = function(){
 		
 		//кнопка назад в главное меню
 		back: GHDom( '.buttBackMenu' ),
+		
+		//элементы стр. настройки игрока
+		setPlayerVal: GHDom( '#set-player-val' ),
+		setPlayerButt: GHDom( '#set-player-butt' ),
+		
 	}
 }
 
@@ -65,6 +71,14 @@ GHInterface.prototype.setupEvent = function(){
 		ui.pageSetPlayer.addClass( 'active' )
 	} )
 	
+	//Сохраняем настройки игрока
+	ui.setPlayerButt.on( 'click', function( e ){
+		e.preventDefault()
+		if( ui.setPlayerVal.val() != ''  ){
+			self.game.setPlayer( ui.setPlayerVal.val() )
+		}
+	} )
+	
 	//клик на пункт меню [настройки карты]
 	ui.setMap.on( 'click', function( e ){
 		self.hidePage( e )
@@ -75,16 +89,7 @@ GHInterface.prototype.setupEvent = function(){
 	ui.display.on( 'click', function( e ){
 		self.hidePage( e )
 		ui.pageDisplay.addClass( 'active' )
-		
-		//иначе ширину и высоту не определяет потому что обьект скрыт
-		self.game.init( {
-			display: ui.pageDisplay,
-			player: {
-				name: 'Стрелок'
-			}
-		} )
-		
-		
+		self.game.start( ui.pageDisplay )
 	} )
 	
 	//клик на пункт меню [статистика]

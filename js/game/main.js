@@ -1,13 +1,30 @@
 var GHGame = function(){
+	this.config = {
+		player: {
+			name: 'Стрелок',
+			position: {
+				x: 50,
+				y: 50,
+			},
+			angle: 60,
+		}
+		
+	}
+	
+	this.display = null
+	this.canvas = null
+	this.player = {}
 	this.status = {}
-	this.config = {}	
 }
 
-GHGame.prototype.init = function( config ){
-	this.config = config //созраняем весь конфиг
-	var display = config.display
-	var player = config.player
+GHGame.prototype.init = function( display ){
+	this.initDisplay( display )
+	this.initPlayer()
+	this.initStatus()
+}
 	
+GHGame.prototype.initDisplay = function( display ){	
+	this.display = display
 	var canvas = document.createElement( 'canvas' )
     canvas.id = 'gameCanvas'
 	canvas.width = display.width()
@@ -16,22 +33,43 @@ GHGame.prototype.init = function( config ){
     // Очищаем display и добавляем канвас
     display.html( '' )  // очищаем содержимое
     display.append( canvas )
-	
+	this.canvas = canvas
+}
+
+GHGame.prototype.initPlayer = function(){
+	this.player = {
+		name: this.config.player.name,
+		position: {
+			x: this.config.player.position.x,
+			y: this.config.player.position.y,
+		},
+		angle: this.config.player.angle,
+	}	
+}
+
+GHGame.prototype.initStatus = function(){
+	this.status = {
+		name: this.config.player.name
+	}	
+}
+
+
+GHGame.prototype.start = function(){
 	//для добавления ольектов в сцену
 	var object = new GHObject()
 	object.init()
 	
 	var objPlayer = object.player({
-		name : player.name,
+		name : this.player.name,
 		position: {
-			x: 50,
-			y: 50,
+			x: this.player.position.x,
+			y: this.player.position.y,
 		},
-		angle: 60,
+		angle: this.player.position.angle,
 	})
 	
 	//создание сцены
-	var scene = new GHScene( canvas )
+	var scene = new GHScene( this.canvas )
 	
 	//добавляем персонажа
 	scene.add( objPlayer )
@@ -39,17 +77,27 @@ GHGame.prototype.init = function( config ){
 	//отрисовка
 	var renderer = new GHRenderer( scene )
 	
-	//this.ctx = canvas.getContext('2d')
 
 	//игровой цикл
 	var loop = new GHGameLoop()
 	loop.start( function frame() {
 		//renderer.update()
 		renderer.render()
-	} )	
+	} )
+}
 
-	console.log( this )
-	console.log( scene )
+
+
+
+
+GHGame.prototype.setPlayer = function( name ){
+	if( name != '' ){
+		this.player.name = name
+		this.status.name = name
+	}
+	console.log( this.player )
+	console.log( this.status )
+	
 }
 
 //статистика
@@ -60,5 +108,6 @@ GHGame.prototype.getStatus = function(){
 
 //сброс всех настроек и статистики
 GHGame.prototype.clear = function(){
-	
+	this.initPlayer()
+	this.initStatus()	
 }

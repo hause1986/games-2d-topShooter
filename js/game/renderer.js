@@ -1,5 +1,4 @@
-var GHRenderer = function( scene ){
-	console.log( scene )
+var GHRenderer = function( scene ){	
 	this.scene = scene
 	this.ctx = scene.canvas.getContext( '2d' )
 }

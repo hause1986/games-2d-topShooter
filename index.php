@@ -27,29 +27,37 @@ $CASH = '?we=' . time();
 		<div id='content'>
 			<?//страница главного меню?>
 			<div class='page active' data-id='menu'>			
-				<div id='setPlayer' class='field'>Задать игрока</div>
-				<div id='setMap' class='field'>Выбрать карту</div>
-				<div id='display' class='field'>Начать игру</div>
-				<div id='status' class='field'>Показать статистику</div>
-				<div id='clear' class='field'>Сбросить все</div>
+				<div id='setPlayer' class='field title'>Задать игрока</div>
+				<div id='setMap' class='field title'>Выбрать карту</div>
+				<div id='display' class='field title'>Начать игру</div>
+				<div id='status' class='field title'>Показать статистику</div>
+				<div id='clear' class='field title'>Сбросить все</div>
 			</div>
 			
 			<?//страница установка параметров игрока?>
 			<div class='page' data-id='set-player'>
-				<div class='field center'>Настойка игрока</div>
+				<div class='field title'>Настойка игрока</div>
+				<div class='field'>
+					<input type='text' id='set-player-val' placeholder='Введите имя игрока' value='' >
+				</div>
+				<div class='field'>
+					<a href='#' id='set-player-butt' class='butt'>Сохранить</a>
+				</div>
 				<a href='#' class='butt buttBackMenu'>Назад</a>
 			</div>
 			<?//страница выбора карты?>
 			<div class='page' data-id='set-map'>
-				<div class='field center'>Настойка карты</div>
+				<div class='field title'>Настойка карты</div>
 				<a href='#' class='butt buttBackMenu'>Назад</a>
 			</div>
 			<?//страница игры?>	
 			<div class='page' data-id='display'></div>
 			<?//страница станистики?>
 			<div class='page' data-id='status'>
-				<div class='field center'>Статистика игрока</div>
-				<div class='status-info'></div>
+				<div class='field title'>Статистика игрока</div>
+				<div class='field'>
+					<pre class='status-info'></pre>
+				</div>
 				<a href='#' class='butt buttBackMenu'>Назад</a>
 			</div>
 			

@@ -95,9 +95,23 @@ a{
     background-color: #3a5a80;
 }
 
+select,
+input[type='text']{
+    width: 100%;
+    padding: 8px;
+    background-color: #1a2d40;
+    border: 1px solid #3498DB;
+    color: #f4dd0b;
+    font-size: 16px;
+    box-sizing: border-box;	
+}
+
 [data-id='menu'] .field{
     cursor: pointer;
-    font-size: 45px;
+}
+
+.title{
+	font-size: 45px;
     font-weight: 900;
     text-align: center;
 }
