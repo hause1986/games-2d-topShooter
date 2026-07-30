@@ -1,2 +1,2 @@
-start http://game.lh:1106/
-php -S game.lh:1106
+start http://localhost:1106/
+php -S localhost:1106

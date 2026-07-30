@@ -1,8 +1,5 @@
 var GHObject = function(){
-	this.size = {
-		width: 20,
-		height: 20,
-	}
+	this.size = 50
 	this.textute = null
 	
 }
@@ -21,14 +18,22 @@ GHObject.prototype.initTexture = function(){
 	}
 }
 
-
-GHObject.prototype.player = function( obj ){
+GHObject.prototype.object = function( obj ){
 	return {
 		name : obj.name,
-		textute : this.textute.player,
-		position: obj.position,
-		angle: obj.angle,
-	}
+		position : obj.position,
+		angle : obj.angle,
+		size : this.size
+	}	
+}
+
+GHObject.prototype.player = function( obj ){
+	var obj = this.object( obj )
+	
+	obj.type = 'player'
+	obj.textute = this.textute.player
+	obj.color = '#f4a460'
+	return obj
 }
 
 GHObject.prototype.concrete = function(){

@@ -87,9 +87,9 @@ GHInterface.prototype.setupEvent = function(){
 	
 	//клик на пункт меню [страничка игры]
 	ui.display.on( 'click', function( e ){
-		self.hidePage( e )
+		self.hidePage( e )		
 		ui.pageDisplay.addClass( 'active' )
-		self.game.start( ui.pageDisplay )
+		self.game.start()
 	} )
 	
 	//клик на пункт меню [статистика]

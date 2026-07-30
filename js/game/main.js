@@ -1,5 +1,5 @@
 var GHGame = function(){
-	this.config = {
+	this.config = {		
 		player: {
 			name: 'Стрелок',
 			position: {
@@ -18,22 +18,21 @@ var GHGame = function(){
 }
 
 GHGame.prototype.init = function( display ){
-	this.initDisplay( display )
+	this.display = display
+	this.initDisplay( )
 	this.initPlayer()
 	this.initStatus()
 }
 	
-GHGame.prototype.initDisplay = function( display ){	
-	this.display = display
+GHGame.prototype.initDisplay = function(){
+	var display = this.display
+	display.html( '' )	
 	var canvas = document.createElement( 'canvas' )
     canvas.id = 'gameCanvas'
-	canvas.width = display.width()
-	canvas.height = display.height()	
-    
-    // Очищаем display и добавляем канвас
-    display.html( '' )  // очищаем содержимое
     display.append( canvas )
+	
 	this.canvas = canvas
+	this.display = display
 }
 
 GHGame.prototype.initPlayer = function(){
@@ -54,36 +53,45 @@ GHGame.prototype.initStatus = function(){
 }
 
 
-GHGame.prototype.start = function(){
+GHGame.prototype.start = function(  ){
+	var canvas = this.canvas
+	var display = this.display
+
+	canvas.width = display.width()
+	canvas.height = display.height()	
+
 	//для добавления ольектов в сцену
 	var object = new GHObject()
 	object.init()
 	
-	var objPlayer = object.player({
+	// добавляем данные в обьект ( создаем обьект Персонаж )
+	var objPlayer = object.player( {
 		name : this.player.name,
 		position: {
 			x: this.player.position.x,
 			y: this.player.position.y,
 		},
-		angle: this.player.position.angle,
-	})
+		angle: this.player.angle,
+	} )
 	
 	//создание сцены
-	var scene = new GHScene( this.canvas )
+	var scene = new GHScene( canvas	)
 	
 	//добавляем персонажа
 	scene.add( objPlayer )
 	
 	//отрисовка
 	var renderer = new GHRenderer( scene )
-	
+	renderer.render()
 
 	//игровой цикл
+	/*
 	var loop = new GHGameLoop()
 	loop.start( function frame() {
 		//renderer.update()
 		renderer.render()
 	} )
+	*/
 }
 
 GHGame.prototype.setPlayer = function( name ){

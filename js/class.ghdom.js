@@ -227,9 +227,9 @@ GHDom.prototype.append = function( content ){
     
     this.elements.forEach(function(element){
 		if( content instanceof Element ) {
-			element.appendChild( content.cloneNode(true) )
+			element.appendChild( content )
 		}else if( content instanceof GHDom ) {
-			element.appendChild( content.element.cloneNode(true) )
+			element.appendChild( content.element )
 		}else if( typeof content === 'string') {
 			element.insertAdjacentHTML( 'beforeend', content )
 		}

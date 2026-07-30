@@ -4,5 +4,6 @@ GHScene = function( canvas ){
 }
 
 GHScene.prototype.add = function( obj ){
+	//TODO - временно
 	this.objects.push( JSON.parse( JSON.stringify( obj ) ) )
 }
