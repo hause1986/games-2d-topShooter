@@ -54,44 +54,51 @@ GHGame.prototype.initStatus = function(){
 
 
 GHGame.prototype.start = function(  ){
-	var canvas = this.canvas
-	var display = this.display
+	var self = this
+	var canvas = self.canvas
+	var display = self.display
 
 	canvas.width = display.width()
 	canvas.height = display.height()	
 
-	//для добавления ольектов в сцену
+	//для добавления обьектов в сцену
 	var object = new GHObject()
 	object.init()
 	
-	// добавляем данные в обьект ( создаем обьект Персонаж )
-	var objPlayer = object.player( {
-		name : this.player.name,
-		position: {
-			x: this.player.position.x,
-			y: this.player.position.y,
-		},
-		angle: this.player.angle,
-	} )
-	
-	//создание сцены
-	var scene = new GHScene( canvas	)
-	
-	//добавляем персонажа
-	scene.add( objPlayer )
-	
-	//отрисовка
-	var renderer = new GHRenderer( scene )
-	renderer.render()
-
-	//игровой цикл
-	/*
-	var loop = new GHGameLoop()
-	loop.start( function frame() {
-		//renderer.update()
+	//загружаем все текстуры
+	object.loadTextures( function(){
+		//как только загрузили текстуры загружаем обьекты
+			
+		// добавляем данные в обьект ( создаем обьект Персонаж )
+		var objPlayer = object.player( {
+			name : self.player.name,
+			position: {
+				x: self.player.position.x,
+				y: self.player.position.y,
+			},
+			angle: self.player.angle,
+		} )
+		
+		//создание сцены
+		var scene = new GHScene( canvas	)
+		
+		//добавляем персонажа
+		scene.add( objPlayer )
+		
+		//отрисовка
+		var renderer = new GHRenderer( scene )
+		
 		renderer.render()
+
+		//игровой цикл
+		/*
+		var loop = new GHGameLoop( 6000 )
+		loop.start( function frame() {		
+			renderer.render()
+		} )
+		*/		
 	} )
-	*/
+
 }
 
 GHGame.prototype.setPlayer = function( name ){
