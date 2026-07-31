@@ -10,9 +10,11 @@ $CASH = '?we=' . time();
 		<link type='image/x-icon' rel='shortcut icon'  href='./img/favicon.ico' />
 
 		<script type='text/javascript' src='./js/class.ghdom.js<?=$CASH?>'></script>
-		<script type='text/javascript' src='./js/class.ghinterface.js<?=$CASH?>'></script>		
-		
+		<script type='text/javascript' src='./js/class.ghinterface.js<?=$CASH?>'></script>
+
+		<script type='text/javascript' src='./js/game/vector.js<?=$CASH?>'></script>
 		<script type='text/javascript' src='./js/game/gameloop.js<?=$CASH?>'></script>
+		<script type='text/javascript' src='./js/game/control.js<?=$CASH?>'></script>
 		<script type='text/javascript' src='./js/game/object.js<?=$CASH?>'></script>
 		<script type='text/javascript' src='./js/game/scene.js<?=$CASH?>'></script>
 		<script type='text/javascript' src='./js/game/renderer.js<?=$CASH?>'></script>

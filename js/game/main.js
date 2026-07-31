@@ -6,10 +6,9 @@ var GHGame = function(){
 				x: 50,
 				y: 50,
 			},
-			angle: 150,
+			angle: 0,
 			speed: 5,
-		}
-		
+		}		
 	}
 	
 	this.display = null
@@ -44,6 +43,7 @@ GHGame.prototype.initPlayer = function(){
 			y: this.config.player.position.y,
 		},
 		angle: this.config.player.angle,
+		speed: this.config.player.speed,
 	}	
 }
 
@@ -52,7 +52,6 @@ GHGame.prototype.initStatus = function(){
 		name: this.config.player.name
 	}	
 }
-
 
 GHGame.prototype.start = function(  ){
 	var self = this
@@ -78,6 +77,7 @@ GHGame.prototype.start = function(  ){
 				y: self.player.position.y,
 			},
 			angle: self.player.angle,
+			speed: self.player.speed,
 		} )
 		
 		//создание сцены
@@ -88,16 +88,15 @@ GHGame.prototype.start = function(  ){
 		
 		//отрисовка
 		var renderer = new GHRenderer( scene )
-		
-		renderer.render()
+		var control = new GHControl( objPlayer )		
 
-		//игровой цикл
-		/*
-		var loop = new GHGameLoop( 6000 )
-		loop.start( function frame() {		
+		//игровой цикл		
+		var loop = new GHGameLoop()
+		loop.start( function frame() {
+			control.update()			
 			renderer.render()
 		} )
-		*/		
+			
 	} )
 
 }

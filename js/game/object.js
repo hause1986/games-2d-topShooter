@@ -1,5 +1,4 @@
-var GHObject = function(){
-	this.size = 30
+var GHObject = function(){	
 	this.texturePachs = null
 	this.loadedTextures = null
 }
@@ -45,44 +44,19 @@ GHObject.prototype.loadTextures = function( callback ){
 	this.loadedTextures = loadedTextures
 }
 
-GHObject.prototype.object = function( obj ){
+GHObject.prototype.objectCopy = function( obj ){
 	var object = {}
-	
 	object = JSON.parse(
 		JSON.stringify( obj )
 	)
-	object.size = this.size
-	
-	return object
-}
-
-
-GHObject.prototype.object1111 = function( obj ){
-	var object = {}
-	
-	if( obj.angle ){
-		object.angle = obj.angle
-	}
-	if( obj.speed ){
-		object.speed = obj.speed
-	}	
-	if( obj.name ){
-		object.name = obj.name
-	}
-	
-	object.position = obj.position
-	object.size = this.size
-	
 	return object
 }
 
 GHObject.prototype.player = function( obj ){	
-	var obj = this.object( obj )
-	
+	//var obj = this.object( obj )	
 	obj.type = 'player'	
 	obj.color = '#f4a460'	
-	obj.image = this.loadedTextures.player
-	
+	obj.image = this.loadedTextures.player	
 	return obj
 }
 
