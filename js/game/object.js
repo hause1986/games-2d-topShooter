@@ -23,13 +23,10 @@ GHObject.prototype.loadTextures = function( callback ){
 	var loadedTextures = {}
 	var loaded = 0
 	var total = Object.keys( texturePachs ).length
-	
-	console.log( total )
     
-	for ( var key in texturePachs ) {
-		
+	for ( var key in texturePachs ) {		
 		var val = texturePachs[key]       
-		var img = new Image()		
+		var img = new Image()
 		
 		img.onload = function(){			
 			//вызываем калбек как только пробежим по всему циклу и загрузка закончена
@@ -44,7 +41,6 @@ GHObject.prototype.loadTextures = function( callback ){
 		}
 		img.src = val
 		loadedTextures[key] = img
-		
     }	
 	this.loadedTextures = loadedTextures
 }
@@ -52,9 +48,24 @@ GHObject.prototype.loadTextures = function( callback ){
 GHObject.prototype.object = function( obj ){
 	var object = {}
 	
+	object = JSON.parse(
+		JSON.stringify( obj )
+	)
+	object.size = this.size
+	
+	return object
+}
+
+
+GHObject.prototype.object1111 = function( obj ){
+	var object = {}
+	
 	if( obj.angle ){
 		object.angle = obj.angle
 	}
+	if( obj.speed ){
+		object.speed = obj.speed
+	}	
 	if( obj.name ){
 		object.name = obj.name
 	}

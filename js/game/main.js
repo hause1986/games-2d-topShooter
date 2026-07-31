@@ -7,6 +7,7 @@ var GHGame = function(){
 				y: 50,
 			},
 			angle: 150,
+			speed: 5,
 		}
 		
 	}

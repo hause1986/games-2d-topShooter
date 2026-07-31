@@ -5,19 +5,11 @@ GHScene = function( canvas ){
 
 GHScene.prototype.add = function( obj ){
 	var object = {}
+	var image = obj.image
 	
-	object.type = obj.type
-	object.color = obj.color
-	object.image = obj.image	
-	object.position = obj.position
-	object.size = obj.size
-	
-	if( obj.name ){
-		object.name = obj.name
-	}
-	if( obj.angle ){
-		object.angle = obj.angle
-	}
-	
+	object = JSON.parse(
+		JSON.stringify( obj )
+	)
+	object.image = image
 	this.objects.push( object )
 }

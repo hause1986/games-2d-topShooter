@@ -23,7 +23,8 @@ GHRenderer.prototype.clearCanvas = function(  ){
 GHRenderer.prototype.draw = function(  ){
 	var ctx = this.ctx
 	
-	for( var object of this.objects ){		
+	for( var object of this.objects ){
+		console.log( object )
 		ctx.save()
 		if( object.type == 'player' ){
 			// 1. центрируем обьект
@@ -49,8 +50,6 @@ GHRenderer.prototype.draw = function(  ){
 			&&	image.complete
 			&&	image.naturalWidth > 0
 		){
-			console.log( object )
-			
 			ctx.drawImage(
 				image,
 				newPosition.x,
