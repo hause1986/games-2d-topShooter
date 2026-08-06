@@ -69,7 +69,7 @@ GHObject.prototype.concrete = function( obj ){
 	obj.type = 'concrete'
 	obj.color = '#cccccc'
 	obj.image = this.loadedTextures[obj.type]
-	//obj.lavel = 0
+	obj.lavel = 3
 	return obj	
 }
 
@@ -81,7 +81,7 @@ GHObject.prototype.brick = function( obj ){
 	obj.type = 'brick'
 	obj.color = '#ff6347'
 	obj.image = this.loadedTextures[obj.type]
-	//obj.lavel = 0
+	obj.lavel = 3
 	return obj		
 }
 
@@ -93,7 +93,7 @@ GHObject.prototype.grass = function( obj ){
 	obj.type = 'grass'
 	obj.color = '#008000'
 	obj.image = this.loadedTextures[obj.type]
-	obj.lavel = 3
+	obj.lavel = 1
 	return obj		
 }
 
