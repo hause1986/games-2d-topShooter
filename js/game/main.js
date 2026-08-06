@@ -43,10 +43,12 @@ GHGame.prototype.initPlayer = function(){
 			y: config.player.position.y,
 		},
 		angle: config.player.angle,
+		scale: config.player.scale,
 		
 		// из за того что я стал использовать матричные координаты
 		// что бы скорость считалась корректно нужно ее поделить на размер ячейки
-		speed: config.player.speed / config.size,
+		speedPos: config.player.speedPos / config.size,
+		speedRot: config.player.speedRot,
 	}	
 }
 
@@ -106,8 +108,6 @@ GHGame.prototype.initMap = function(){
 	this.map = map
 }
 
-
-
 GHGame.prototype.initStatus = function(){
 	this.status = {
 		name: config.player.name
@@ -135,12 +135,15 @@ GHGame.prototype.start = function(  ){
 		// добавляем данные в обьект ( создаем обьект Персонаж )
 		var objPlayer = object.player( {
 			name : self.player.name,
-			position: {
-				x: self.player.position.x,
-				y: self.player.position.y,
+			position : {
+				x : self.player.position.x,
+				y : self.player.position.y,
 			},
-			angle: self.player.angle,
-			speed: self.player.speed,
+			angle : self.player.angle,
+			scale : self.player.scale,
+			speedPos : self.player.speedPos,
+			speedRot : self.player.speedRot,
+			
 		} )
 		//добавляем персонажа
 		scene.add( objPlayer )		
@@ -151,6 +154,13 @@ GHGame.prototype.start = function(  ){
 			for( var x = 0; x < map.size.cols; x++ ){
 				var objWall = null
 				var val = map.walls[y][x]
+				
+				if(
+						self.player.position.x == x
+					&&	self.player.position.y == y
+				){
+					continue
+				}
 				
 				if( val == 0 ){
 					continue
@@ -190,6 +200,9 @@ GHGame.prototype.start = function(  ){
 				scene.add( objWall )
 			}
 		}
+		
+		//сортировка обьектов по уровням
+		scene.sortObjects()
 		
 		//отрисовка
 		var renderer = new GHRenderer(

@@ -26,12 +26,13 @@ GHControl.prototype.onKey = function( flag, e ) {
 }
 
 GHControl.prototype.update = function(){	
-	var speed = this.object.speed
-	var angle = this.object.angle	
+	var speedPos = this.object.speedPos
+	var speedRot = this.object.speedRot
+	var angle = this.object.angle
 	var position = this.object.position
 	var states = this.states
-	
 	var cos = sin = 0
+	
 	if(
 			states.w
 		||	states.s
@@ -47,13 +48,13 @@ GHControl.prototype.update = function(){
 			sin = Math.sin( angle.toRad() )
 			
 			if( states.w ){
-				position.x += speed * sin
-				position.y -= speed * cos
+				position.x += speedPos * sin
+				position.y -= speedPos * cos
 			}
 			
 			if( states.s ){
-				position.x -= speed * sin
-				position.y += speed * cos
+				position.x -= speedPos * sin
+				position.y += speedPos * cos
 			}	
 		}
 		
@@ -62,10 +63,10 @@ GHControl.prototype.update = function(){
 			||	states.d
 		){			
 			if( states.a ){			
-				angle -= 2
+				angle -= speedRot
 			}
 			if( states.d ){
-				angle += 2
+				angle += speedRot
 			}
 			
 			if( angle > 360 ){
@@ -89,5 +90,4 @@ GHControl.prototype.update = function(){
 		}
 		this.object.angle = angle
 	}
-	
 }

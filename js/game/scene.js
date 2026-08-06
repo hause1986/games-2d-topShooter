@@ -3,6 +3,14 @@ GHScene = function( canvas ){
 	this.objects = []
 }
 
+GHScene.prototype.sortObjects = function(){
+	var objects = this.objects.slice().sort( function( a, b ){
+		return ( a.lavel || 0 ) - ( b.lavel || 0 )
+	} )
+	this.objects = objects
+}
+
+//пока не нужное
 GHScene.prototype.addCopy = function( obj ){
 	var object = {}
 	var image = obj.image	

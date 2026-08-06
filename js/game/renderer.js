@@ -3,7 +3,6 @@ var GHRenderer = function( scene, size ){
 	this.objects = scene.objects
 	this.ctx = this.canvas.getContext( '2d' )
 	this.size = size
-	this.halfSize  = size / 2
 }
 
 GHRenderer.prototype.render = function( obj ){
@@ -24,20 +23,15 @@ GHRenderer.prototype.clearCanvas = function(  ){
 
 GHRenderer.prototype.draw = function(  ){
 	var ctx = this.ctx
-	var size = 0
-	var halfSize = -this.halfSize
+	var size = this.size
 	
-	var sortObjects = this.objects.slice().sort( function( a, b ){
-		return ( a.lavel || 0 ) - ( b.lavel || 0 )
-	} )
-	
-	for( var object of sortObjects ){
+	for( var object of this.objects ){
 		ctx.save()
 		
 		if( object === null ){
 			continue
 		}
-		size = this.size
+		
 		// для обьектов которые представлены в матричном виде делаем перерасчет			
 		var pixel = this.getPointers( object.position )
 		//ставим начало координат в новую точку
@@ -45,11 +39,11 @@ GHRenderer.prototype.draw = function(  ){
 			pixel.x,
 			pixel.y
 		)
+		
 		if( object.type == 'player' ){			
 			var angle = object.angle
 			//делаем поворот относительно новой системы координат
 			ctx.rotate( angle.toRad() )
-			//size *= 0.8 
 		}		
 		
 		var image = object.image		
@@ -58,13 +52,17 @@ GHRenderer.prototype.draw = function(  ){
 			&&	image.complete
 			&&	image.naturalWidth > 0
 		){
-			//3. Рисуем обьект как бы от начало координат НО в той координате которая реально
+			var scale = object.scale || 1			
+			var scaledSize = size * scale
+			var scaledHalfSize = scaledSize / 2
+			
+			// Рисуем обьект как бы от начало координат НО в той координате которая реально
 			ctx.drawImage(
 				image,
-				halfSize,
-				halfSize,
-				size,
-				size
+				-scaledHalfSize,
+				-scaledHalfSize,
+				scaledSize,
+				scaledSize
 			)
 		}
 		ctx.restore()

@@ -1,13 +1,15 @@
 var config = {
-	size: 40,
+	size: 60,
 	player: {
 		name: 'Стрелок',
 		position: {
-			x: 1,
-			y: 1,
+			x: 0,
+			y: 5,
 		},
 		angle: 90,
-		speed: 2,
+		speedPos: 3,
+		speedRot: 5,
+		scale: 0.6,
 	},
 	walls : null,
 }
