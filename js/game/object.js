@@ -55,38 +55,51 @@ GHObject.prototype.objectCopy = function( obj ){
 GHObject.prototype.player = function( obj ){	
 	//var obj = this.object( obj )	
 	obj.type = 'player'	
-	obj.color = '#f4a460'	
-	obj.image = this.loadedTextures.player	
+	obj.color = '#f4a460'
+	obj.image = this.loadedTextures.player
 	return obj
 }
 
-GHObject.prototype.concrete = function(){
+GHObject.prototype.concrete = function( obj ){
 	// бетон 
 	// пули ударяются
 	// не пробить
-	// не проехать	
+	// не проехать
+	obj.type = 'concrete'
+	obj.color = '#cccccc'
+	obj.image = this.loadedTextures.concrete
+	return obj	
 }
 
-GHObject.prototype.brick = function(){
+GHObject.prototype.brick = function( obj ){
 	// кирпич 
 	// пули ударяются
 	// пробить
 	// не проехать
+	obj.type = 'brick'
+	obj.color = '#ff6347'
+	obj.image = this.loadedTextures.brick
+	return obj		
 }
 
-GHObject.prototype.grass = function(){
+GHObject.prototype.grass = function( obj ){
 	// трава
 	// пули не ударяются
 	// не пробить 
-	// проезать по низу	
+	// проезать по низу
+	obj.type = 'grass'
+	obj.color = '#008000'
+	obj.image = this.loadedTextures.grass
+	return obj		
 }
 
-GHObject.prototype.water = function(){
+GHObject.prototype.water = function( obj ){
 	// трава
 	// пули не ударяются
 	// не пробить 
-	// не проехать	
+	// не проехать
+	obj.type = 'water'
+	obj.color = '#4682b4'
+	obj.image = this.loadedTextures.water
+	return obj	
 }
-
-
-

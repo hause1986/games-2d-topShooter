@@ -1,26 +1,26 @@
+/*
+0 ------------->x
+ |
+ |
+ |
+ |
+ |
+ y
+
+*/
 var GHGame = function(){
-	this.config = {		
-		player: {
-			name: 'Стрелок',
-			position: {
-				x: 50,
-				y: 50,
-			},
-			angle: 0,
-			speed: 5,
-		}		
-	}
-	
 	this.display = null
 	this.canvas = null
 	this.player = {}
+	this.map = {}
 	this.status = {}
 }
 
 GHGame.prototype.init = function( display ){
 	this.display = display
-	this.initDisplay( )
+	this.initDisplay()
 	this.initPlayer()
+	this.initMap()
 	this.initStatus()
 }
 	
@@ -37,19 +37,80 @@ GHGame.prototype.initDisplay = function(){
 
 GHGame.prototype.initPlayer = function(){
 	this.player = {
-		name: this.config.player.name,
+		name: config.player.name,
 		position: {
-			x: this.config.player.position.x,
-			y: this.config.player.position.y,
+			x: config.player.position.x,
+			y: config.player.position.y,
 		},
-		angle: this.config.player.angle,
-		speed: this.config.player.speed,
+		angle: config.player.angle,
+		
+		// из за того что я стал использовать матричные координаты
+		// что бы скорость считалась корректно нужно ее поделить на размер ячейки
+		speed: config.player.speed / config.size,
 	}	
 }
 
+GHGame.prototype.initMap = function(){
+	// пока это только для тестов - генерация карь
+	// по идее сюда нужно сделать загрузку из существующих	
+	var cols = 100 // getRandomInt( 10, 20 ) // строки
+	var rows = 100 // getRandomInt( 10, 20 ) // столбики
+	
+	var setWall = function(  ){
+		
+		var max = 0
+		for( var i = 0; i < configWalls.length; i++ ){
+			max += configWalls[i].percent
+		}
+		
+		var random = getRandomInt( 0, max )
+		var cumulative = 0
+		for( var i = 0; i < configWalls.length; i++ ){
+			cumulative += configWalls[i].percent
+			if( random <= cumulative ){
+				return configWalls[i].type
+			}
+		}		
+	}
+	var configWalls = [
+		//пустота
+		{ type : 0, percent : 70 },
+		//бетон
+		{ type : 1, percent : 5 },
+		//кирпич
+		{ type : 2, percent : 20 },
+		//трава
+		{ type : 3, percent : 5 },
+		//вода
+		{ type : 4, percent : 5 },
+	]
+	
+	var map = {
+		size : {
+			cols : cols,
+			rows : rows,
+			//пока не нужно
+			//w : cols * config.size,
+			//h : rows * config.size,
+		},
+	}
+	var walls = []
+	for( var j = 0; j < rows; j++ ){
+		var row = []
+		for( var i = 0; i < cols; i++ ){
+			row.push( setWall() )
+		}
+		walls.push( row )
+	}
+	map.walls = walls
+	this.map = map
+}
+
+
+
 GHGame.prototype.initStatus = function(){
 	this.status = {
-		name: this.config.player.name
+		name: config.player.name
 	}	
 }
 
@@ -64,9 +125,11 @@ GHGame.prototype.start = function(  ){
 	//для добавления обьектов в сцену
 	var object = new GHObject()
 	object.init()
+	//создание сцены
+	var scene = new GHScene( canvas	)	
 	
-	//загружаем все текстуры
-	object.loadTextures( function(){
+	//загружаем все текстуры	
+	object.loadTextures( function(){		
 		//как только загрузили текстуры загружаем обьекты
 			
 		// добавляем данные в обьект ( создаем обьект Персонаж )
@@ -79,19 +142,64 @@ GHGame.prototype.start = function(  ){
 			angle: self.player.angle,
 			speed: self.player.speed,
 		} )
-		
-		//создание сцены
-		var scene = new GHScene( canvas	)
-		
 		//добавляем персонажа
-		scene.add( objPlayer )
+		scene.add( objPlayer )		
+		
+		//добавляем обьекты карты в цикле ( каждый обьект отдельно! )
+		var map = self.map		
+		for( var y = 0; y < map.size.rows; y++ ){
+			for( var x = 0; x < map.size.cols; x++ ){
+				var objWall = null
+				var val = map.walls[y][x]
+				
+				if( val == 0 ){
+					continue
+				}else if( val == 1 ){
+					//бетон
+					objWall = object.concrete( {
+						position: {
+							x: x,
+							y: y,
+						}
+					} )
+				}else if( val == 2 ){
+					//кирпич
+					objWall = object.brick( {
+						position: {
+							x: x,
+							y: y,
+						}
+					} )
+				}else if( val == 3 ){
+					//трава
+					objWall = object.grass( {
+						position: {
+							x: x,
+							y: y,
+						}
+					} )
+				}else if( val == 4 ){
+					//вода
+					objWall = object.water( {
+						position: {
+							x: x,
+							y: y,
+						}
+					} )
+				}
+				scene.add( objWall )
+			}
+		}
 		
 		//отрисовка
-		var renderer = new GHRenderer( scene )
+		var renderer = new GHRenderer(
+			scene,
+			config.size
+		)
 		var control = new GHControl( objPlayer )		
 
 		//игровой цикл		
-		var loop = new GHGameLoop()
+		var loop = new GHGameLoop(  )
 		loop.start( function frame() {
 			control.update()			
 			renderer.render()

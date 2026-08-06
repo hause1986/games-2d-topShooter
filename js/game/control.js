@@ -1,6 +1,5 @@
 var GHControl = function( object ){
-	this.object = object
-	
+	this.object = object	
 	this.codes  = {
 		87: 'w',
 		83: 's',
@@ -26,7 +25,7 @@ GHControl.prototype.onKey = function( flag, e ) {
 	e.stopPropagation && e.stopPropagation()
 }
 
-GHControl.prototype.update = function(){
+GHControl.prototype.update = function(){	
 	var speed = this.object.speed
 	var angle = this.object.angle	
 	var position = this.object.position

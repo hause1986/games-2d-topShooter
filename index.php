@@ -12,7 +12,8 @@ $CASH = '?we=' . time();
 		<script type='text/javascript' src='./js/class.ghdom.js<?=$CASH?>'></script>
 		<script type='text/javascript' src='./js/class.ghinterface.js<?=$CASH?>'></script>
 
-		<script type='text/javascript' src='./js/game/vector.js<?=$CASH?>'></script>
+		<script type='text/javascript' src='./js/game/gonfig.js<?=$CASH?>'></script>
+		<script type='text/javascript' src='./js/game/tools.js<?=$CASH?>'></script>
 		<script type='text/javascript' src='./js/game/gameloop.js<?=$CASH?>'></script>
 		<script type='text/javascript' src='./js/game/control.js<?=$CASH?>'></script>
 		<script type='text/javascript' src='./js/game/object.js<?=$CASH?>'></script>

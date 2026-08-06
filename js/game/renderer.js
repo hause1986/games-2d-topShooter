@@ -1,8 +1,9 @@
-var GHRenderer = function( scene ){
+var GHRenderer = function( scene, size ){
 	this.canvas = scene.canvas
 	this.objects = scene.objects
 	this.ctx = this.canvas.getContext( '2d' )
-	this.size = 50
+	this.size = size
+	this.halfSize  = size / 2
 }
 
 GHRenderer.prototype.render = function( obj ){
@@ -10,7 +11,6 @@ GHRenderer.prototype.render = function( obj ){
 	this.drawGrid() // вспомогательная сетка
 	this.draw()
 }
-
 
 GHRenderer.prototype.clearCanvas = function(  ){
 	var canvas = new GHDom( this.canvas )	
@@ -25,31 +25,39 @@ GHRenderer.prototype.clearCanvas = function(  ){
 GHRenderer.prototype.draw = function(  ){
 	var ctx = this.ctx
 	var size = this.size
+	var halfSize = -this.halfSize
 	
 	for( var object of this.objects ){
 		ctx.save()
-		if( object.type == 'player' ){			
-			// 1. центрируем обьект		
-	
-			ctx.translate(
-				object.position.x,
-				object.position.y
-			)
-			var angle = object.angle
-			ctx.rotate( angle.toRad() )			
+		
+		if( object === null ){
+			continue
 		}
-		// 3. Рисуем (все координаты относительно центра)
-		var newPosition = this.getPointers( object.position )
+		
+		// для обьектов которые представлены в матричном виде делаем перерасчет			
+		var pixel = this.getPointers( object.position )
+		//ставим начало координат в новую точку
+		ctx.translate(
+			pixel.x,
+			pixel.y
+		)
+		if( object.type == 'player' ){			
+			var angle = object.angle
+			//делаем поворот относительно новой системы координат
+			ctx.rotate( angle.toRad() )				
+		}		
+		
 		var image = object.image		
 		if(
 				image
 			&&	image.complete
 			&&	image.naturalWidth > 0
 		){
+			//3. Рисуем обьект как бы от начало координат НО в той координате которая реально
 			ctx.drawImage(
 				image,
-				newPosition.x,
-				newPosition.y,
+				halfSize,
+				halfSize,
 				size,
 				size
 			)
@@ -58,13 +66,12 @@ GHRenderer.prototype.draw = function(  ){
 	}	
 }
 
-
 //для получения точек для рисования квадратов
-GHRenderer.prototype.getPointers = function( pointer ){
-	var halfSize  = this.size / 2
-	var x = -halfSize
-	var y = -halfSize
-	
+GHRenderer.prototype.getPointers = function( position ){
+	var size = this.size
+	var x = position.x * size + size / 2
+	var y = position.y * size + size / 2
+
 	return {
 		x : x,
 		y : y,
@@ -75,15 +82,13 @@ GHRenderer.prototype.getPointers = function( pointer ){
 GHRenderer.prototype.drawGrid = function(){	
 	var step = this.size
 	var ctx = this.ctx    
-	var i = this.size / 2	
+	var i = this.size
 	var width = this.canvas.width
     var height = this.canvas.height	
 	
 	ctx.save()
 	ctx.strokeStyle = '#51518f'
 	ctx.lineWidth = '1'
-	
-	
 	
 	for( var x = i; x <= width; x += step ){
         ctx.beginPath()
