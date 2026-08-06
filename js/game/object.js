@@ -57,6 +57,7 @@ GHObject.prototype.player = function( obj ){
 	obj.type = 'player'	
 	obj.color = '#f4a460'
 	obj.image = this.loadedTextures.player
+	obj.lavel = 2
 	return obj
 }
 
@@ -67,7 +68,8 @@ GHObject.prototype.concrete = function( obj ){
 	// не проехать
 	obj.type = 'concrete'
 	obj.color = '#cccccc'
-	obj.image = this.loadedTextures.concrete
+	obj.image = this.loadedTextures[obj.type]
+	//obj.lavel = 0
 	return obj	
 }
 
@@ -78,7 +80,8 @@ GHObject.prototype.brick = function( obj ){
 	// не проехать
 	obj.type = 'brick'
 	obj.color = '#ff6347'
-	obj.image = this.loadedTextures.brick
+	obj.image = this.loadedTextures[obj.type]
+	//obj.lavel = 0
 	return obj		
 }
 
@@ -89,7 +92,8 @@ GHObject.prototype.grass = function( obj ){
 	// проезать по низу
 	obj.type = 'grass'
 	obj.color = '#008000'
-	obj.image = this.loadedTextures.grass
+	obj.image = this.loadedTextures[obj.type]
+	obj.lavel = 3
 	return obj		
 }
 
@@ -100,6 +104,7 @@ GHObject.prototype.water = function( obj ){
 	// не проехать
 	obj.type = 'water'
 	obj.color = '#4682b4'
-	obj.image = this.loadedTextures.water
+	obj.image = this.loadedTextures[obj.type]
+	obj.lavel = 1
 	return obj	
 }

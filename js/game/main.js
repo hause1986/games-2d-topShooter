@@ -53,8 +53,8 @@ GHGame.prototype.initPlayer = function(){
 GHGame.prototype.initMap = function(){
 	// пока это только для тестов - генерация карь
 	// по идее сюда нужно сделать загрузку из существующих	
-	var cols = 100 // getRandomInt( 10, 20 ) // строки
-	var rows = 100 // getRandomInt( 10, 20 ) // столбики
+	var cols = 40 // getRandomInt( 10, 20 ) // строки
+	var rows = 20 // getRandomInt( 10, 20 ) // столбики
 	
 	var setWall = function(  ){
 		

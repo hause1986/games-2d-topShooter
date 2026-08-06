@@ -24,16 +24,20 @@ GHRenderer.prototype.clearCanvas = function(  ){
 
 GHRenderer.prototype.draw = function(  ){
 	var ctx = this.ctx
-	var size = this.size
+	var size = 0
 	var halfSize = -this.halfSize
 	
-	for( var object of this.objects ){
+	var sortObjects = this.objects.slice().sort( function( a, b ){
+		return ( a.lavel || 0 ) - ( b.lavel || 0 )
+	} )
+	
+	for( var object of sortObjects ){
 		ctx.save()
 		
 		if( object === null ){
 			continue
 		}
-		
+		size = this.size
 		// для обьектов которые представлены в матричном виде делаем перерасчет			
 		var pixel = this.getPointers( object.position )
 		//ставим начало координат в новую точку
@@ -44,7 +48,8 @@ GHRenderer.prototype.draw = function(  ){
 		if( object.type == 'player' ){			
 			var angle = object.angle
 			//делаем поворот относительно новой системы координат
-			ctx.rotate( angle.toRad() )				
+			ctx.rotate( angle.toRad() )
+			//size *= 0.8 
 		}		
 		
 		var image = object.image		
