@@ -60,7 +60,7 @@ GHObject.prototype.player = function( obj ){
 	obj.lavel = 2
 	obj.collision = {
 		type	: 'circle',
-		radius	: 0.7,	//в дробном отношении относительно назмера клетки
+		radius	: 1,	//в дробном отношении относительно назмера клетки
 	}
 	return obj
 }

@@ -1,5 +1,5 @@
 var config = {
-	size: 70,
+	size: 50,
 	player: {
 		name: 'Стрелок',
 		position: {
