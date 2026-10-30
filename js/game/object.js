@@ -58,7 +58,10 @@ GHObject.prototype.player = function( obj ){
 	obj.color = '#f4a460'
 	obj.image = this.loadedTextures.player
 	obj.lavel = 2
-	obj.collision = true
+	obj.collision = {
+		type	: 'circle',
+		radius	: 30,
+	}
 	return obj
 }
 
@@ -71,7 +74,11 @@ GHObject.prototype.concrete = function( obj ){
 	obj.color = '#cccccc'
 	obj.image = this.loadedTextures[obj.type]
 	obj.lavel = 3
-	obj.collision = true
+	obj.collision = {
+		type	: 'rect',
+		width	: 70,
+		height	: 70,
+	}
 	return obj	
 }
 
@@ -84,7 +91,11 @@ GHObject.prototype.brick = function( obj ){
 	obj.color = '#ff6347'
 	obj.image = this.loadedTextures[obj.type]
 	obj.lavel = 3
-	obj.collision = true
+	obj.collision = {
+		type	: 'rect',
+		width	: 70,
+		height	: 70,
+	}
 	return obj		
 }
 

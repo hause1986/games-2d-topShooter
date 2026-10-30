@@ -1,14 +1,18 @@
 var GHRenderer = function( scene, size ){
 	this.canvas = scene.canvas
-	this.objects = scene.objects
+	this.objects = scene.objects	
 	this.ctx = this.canvas.getContext( '2d' )
 	this.size = size
+	//TODO - вспомогательный для отображения границ коллизии
+	this.collisionObjects = scene.collisionObjects
 }
 
 GHRenderer.prototype.render = function( obj ){
 	this.clearCanvas()
-	this.drawGrid() // вспомогательная сетка
+	this.drawGrid() // вспомогательная сетка	
 	this.draw()
+	//TODO - вспомогательный для отображения границ коллизии
+	this.drawCollision()
 }
 
 GHRenderer.prototype.clearCanvas = function(  ){
@@ -108,3 +112,40 @@ GHRenderer.prototype.drawGrid = function(){
 	
 	ctx.restore()
 }
+
+//TODO - вспомогательный для отображения границ коллизии
+GHRenderer.prototype.drawCollision = function(){
+	var ctx = this.ctx
+	ctx.save()
+	ctx.strokeStyle = '#00FF00'
+	ctx.lineWidth = '3'
+	
+	for( var object of this.collisionObjects ){
+		var pixel = this.getPointers( object.position )
+		
+		ctx.beginPath()		
+		if( object.collision.type == 'rect' ){
+			var pw = object.collision.width
+			var ph = object.collision.height
+			var px = pixel.x - pw / 2
+			var py = pixel.y - ph / 2			
+			ctx.rect(
+				px,
+				py,
+				pw,
+				ph
+			)			
+		}else if( object.collision.type == 'circle' ){
+			ctx.arc(
+				pixel.x,
+				pixel.y,
+				object.collision.radius,
+				0,
+				Math.PI * 2				
+			)
+		}
+        ctx.stroke()
+		
+	}	
+	ctx.restore()
+}	

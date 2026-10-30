@@ -74,6 +74,7 @@ GHGame.prototype.initMap = function(){
 			}
 		}		
 	}
+	
 	var configWalls = [
 		//пустота
 		{ type : 0, percent : 70 },
@@ -96,6 +97,7 @@ GHGame.prototype.initMap = function(){
 			//h : rows * config.size,
 		},
 	}
+	
 	var walls = []
 	for( var j = 0; j < rows; j++ ){
 		var row = []
@@ -133,7 +135,7 @@ GHGame.prototype.start = function(  ){
 		//как только загрузили текстуры загружаем обьекты
 		
 		// Создаем систему коллизий
-		var collision = new GHCollision( config.size )
+		var collision = new GHCollision()
 			
 		// добавляем данные в обьект ( создаем обьект Персонаж )
 		var objPlayer = object.player( {
@@ -210,6 +212,9 @@ GHGame.prototype.start = function(  ){
 		
 		//сортировка обьектов по уровням
 		scene.sortObjects()
+		
+		//TODO - вспомогательный для отображения границ коллизии
+		scene.addCollision( collision.get() )
 		
 		//отрисовка
 		var renderer = new GHRenderer(
