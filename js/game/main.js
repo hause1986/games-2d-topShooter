@@ -131,6 +131,9 @@ GHGame.prototype.start = function(  ){
 	//загружаем все текстуры	
 	object.loadTextures( function(){		
 		//как только загрузили текстуры загружаем обьекты
+		
+		// Создаем систему коллизий
+		var collision = new GHCollision( config.size )
 			
 		// добавляем данные в обьект ( создаем обьект Персонаж )
 		var objPlayer = object.player( {
@@ -142,11 +145,14 @@ GHGame.prototype.start = function(  ){
 			angle : self.player.angle,
 			scale : self.player.scale,
 			speedPos : self.player.speedPos,
-			speedRot : self.player.speedRot,
-			
+			speedRot : self.player.speedRot,			
 		} )
-		//добавляем персонажа
-		scene.add( objPlayer )		
+		
+		//добавляем персонажа в сцену
+		scene.add( objPlayer )
+
+		//добавляем персонажа в систему коллизий
+		collision.add( objPlayer )
 		
 		//добавляем обьекты карты в цикле ( каждый обьект отдельно! )
 		var map = self.map		
@@ -198,6 +204,7 @@ GHGame.prototype.start = function(  ){
 					} )
 				}
 				scene.add( objWall )
+				collision.add( objWall )
 			}
 		}
 		
@@ -209,7 +216,10 @@ GHGame.prototype.start = function(  ){
 			scene,
 			config.size
 		)
-		var control = new GHControl( objPlayer )		
+		
+		//кем укравляем , с чем сталкиваемся
+		var control = new GHControl( objPlayer, collision )	
+
 
 		//игровой цикл		
 		var loop = new GHGameLoop(  )
@@ -217,6 +227,7 @@ GHGame.prototype.start = function(  ){
 			control.update()			
 			renderer.render()
 		} )
+
 			
 	} )
 

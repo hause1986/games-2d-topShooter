@@ -1,5 +1,6 @@
-var GHControl = function( object ){
-	this.object = object	
+var GHControl = function( object, collision ){	
+	this.object = object
+	this.collision = collision
 	this.codes  = {
 		87: 'w',
 		83: 's',
@@ -32,6 +33,10 @@ GHControl.prototype.update = function(){
 	var position = this.object.position
 	var states = this.states
 	var cos = sin = 0
+	
+    // Запоминаем старую позицию
+    var oldX = position.x
+    var oldY = position.y
 	
 	if(
 			states.w
