@@ -60,7 +60,7 @@ GHObject.prototype.player = function( obj ){
 	obj.lavel = 2
 	obj.collision = {
 		type	: 'circle',
-		radius	: 30,
+		radius	: 0.7,	//в дробном отношении относительно назмера клетки
 	}
 	return obj
 }
@@ -76,8 +76,8 @@ GHObject.prototype.concrete = function( obj ){
 	obj.lavel = 3
 	obj.collision = {
 		type	: 'rect',
-		width	: 70,
-		height	: 70,
+		width	: 1,	//в дробном отношении относительно назмера клетки
+		height	: 1,	//в дробном отношении относительно назмера клетки
 	}
 	return obj	
 }
@@ -93,8 +93,8 @@ GHObject.prototype.brick = function( obj ){
 	obj.lavel = 3
 	obj.collision = {
 		type	: 'rect',
-		width	: 70,
-		height	: 70,
+		width	: 1,	//в дробном отношении относительно назмера клетки
+		height	: 1,	//в дробном отношении относительно назмера клетки
 	}
 	return obj		
 }

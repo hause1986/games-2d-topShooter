@@ -125,10 +125,10 @@ GHRenderer.prototype.drawCollision = function(){
 		
 		ctx.beginPath()		
 		if( object.collision.type == 'rect' ){
-			var pw = object.collision.width
-			var ph = object.collision.height
+			var pw = object.collision.width * this.size
+			var ph = object.collision.height * this.size
 			var px = pixel.x - pw / 2
-			var py = pixel.y - ph / 2			
+			var py = pixel.y - ph / 2
 			ctx.rect(
 				px,
 				py,
@@ -136,16 +136,16 @@ GHRenderer.prototype.drawCollision = function(){
 				ph
 			)			
 		}else if( object.collision.type == 'circle' ){
+			var radius = object.collision.radius * ( this.size / 2 )
 			ctx.arc(
 				pixel.x,
 				pixel.y,
-				object.collision.radius,
+				radius,
 				0,
 				Math.PI * 2				
 			)
 		}
-        ctx.stroke()
-		
+        ctx.stroke()		
 	}	
 	ctx.restore()
 }	
